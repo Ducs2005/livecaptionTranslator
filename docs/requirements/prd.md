@@ -1,4 +1,4 @@
-#  liệu Yêu cầu Sản phẩm (PRD)
+#  Tài liệu Yêu cầu Sản phẩm (PRD)
 
 > v0.1 · 08/09/2026 · Dự thảo. Mục tiêu dịch Windows Live Captions đã xác nhận; ưu tiên, chỉ tiêu và ngôn ngữ MVP cần phê duyệt.
 
