@@ -1,0 +1,17 @@
+# Thông tin bí mật và cấu hình cục bộ
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# File tạm của hệ điều hành và trình soạn thảo
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.tmp
+~$*
+
+# Nhật ký cục bộ có thể chứa dữ liệu phiên
+*.log
