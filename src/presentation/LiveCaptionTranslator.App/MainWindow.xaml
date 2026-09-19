@@ -1,0 +1,140 @@
+<Window x:Class="LiveCaptionTranslator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="LiveCaption Translator · UI demo" Width="1080" Height="820"
+        MinWidth="780" MinHeight="650" WindowStartupLocation="CenterScreen"
+        Background="#F5F7F4" Foreground="{StaticResource Ink}" FontFamily="Segoe UI" FontSize="13"
+        Topmost="{Binding AlwaysOnTop, Mode=TwoWay}">
+    <Grid Margin="28,22,28,18">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Margin="0,0,0,24">
+            <Grid.ColumnDefinitions><ColumnDefinition /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <Border Width="36" Height="36" Background="{StaticResource Accent}" CornerRadius="10" Margin="0,0,11,0">
+                    <TextBlock Text="&#xE8F2;" FontFamily="Segoe MDL2 Assets" FontSize="20" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Border>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="LiveCaption" FontSize="17" FontWeight="Bold" />
+                    <TextBlock Text="T R A N S L A T O R" FontSize="9" Foreground="{StaticResource Muted}" />
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                <Border Background="#E6EEE8" CornerRadius="5" Padding="9,5" Margin="0,0,14,0">
+                    <TextBlock Text="UI DEMO · 0.1" FontSize="10" FontWeight="Bold" Foreground="{StaticResource Accent}" />
+                </Border>
+                <Button Content="Hướng dẫn" Click="Guide_Click" Padding="12,7" ToolTip="Thông tin về bản demo và Windows Live Captions" />
+            </StackPanel>
+        </Grid>
+
+        <StackPanel Grid.Row="1" Margin="0,0,0,20">
+            <TextBlock Text="Hiểu từng câu. Kết nối mọi ý." FontSize="29" FontWeight="SemiBold" />
+            <TextBlock Text="Không gian phụ đề của bạn, bằng ngôn ngữ bạn chọn." Foreground="{StaticResource Muted}" Margin="0,6,0,0" />
+        </StackPanel>
+
+        <Grid Grid.Row="2" Margin="0,0,0,16">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="16" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="01 / NGUỒN PHỤ ĐỀ" Style="{StaticResource SmallLabel}" />
+                    <TextBlock Text="Windows Live Captions" FontSize="18" FontWeight="SemiBold" Margin="0,9,0,5" />
+                    <TextBlock Text="Chưa kết nối · Đang dùng văn bản mẫu" Foreground="{StaticResource Muted}" TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+            <Border Grid.Column="2" Style="{StaticResource Card}">
+                <Grid>
+                    <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
+                    <TextBlock Text="02 / NGÔN NGỮ BẠN MUỐN ĐỌC" Style="{StaticResource SmallLabel}" />
+                    <ComboBox Grid.Row="1" ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}"
+                              DisplayMemberPath="Name" FontSize="16" Padding="10,5" Margin="0,7,0,4" HorizontalContentAlignment="Stretch"
+                              AutomationProperties.Name="Ngôn ngữ đích" />
+                    <TextBlock Grid.Row="2" Text="Nguồn mẫu: English · 2 ngôn ngữ để trải nghiệm" FontSize="11" Foreground="{StaticResource Muted}" TextWrapping="Wrap" />
+                </Grid>
+            </Border>
+        </Grid>
+
+        <Grid Grid.Row="3" Margin="0,0,0,14">
+            <Grid.ColumnDefinitions><ColumnDefinition /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="{Binding StartLabel}" Style="{StaticResource PrimaryButton}" IsEnabled="{Binding CanStart}" Click="Start_Click" Margin="0,0,8,0" />
+                <Button Content="{Binding PauseLabel}" IsEnabled="{Binding CanPause}" Click="Pause_Click" Margin="0,0,8,0" />
+                <Button Content="Dừng" IsEnabled="{Binding CanStop}" Click="Stop_Click" />
+            </StackPanel>
+            <CheckBox Grid.Column="1" Content="Luôn nổi" IsChecked="{Binding AlwaysOnTop}" VerticalAlignment="Center" Margin="14,0,3,0" ToolTip="Giữ cửa sổ này phía trên các cửa sổ thông thường" />
+        </Grid>
+
+        <Border Grid.Row="4" Style="{StaticResource Card}" Padding="0">
+            <Grid>
+                <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="*" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
+                <Border BorderBrush="{StaticResource Line}" BorderThickness="0,0,0,1" Padding="20,14">
+                    <Grid>
+                        <Grid.ColumnDefinitions><ColumnDefinition /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Ellipse Width="7" Height="7" Fill="{Binding StatusColor}" Margin="0,0,8,0" />
+                            <TextBlock Text="{Binding Status}" FontWeight="SemiBold" Foreground="{Binding StatusColor}" AutomationProperties.LiveSetting="Polite" />
+                            <TextBlock Text=" / " Foreground="#C3CECA" Margin="8,0" />
+                            <TextBlock Text="{Binding CountLabel}" Foreground="{StaticResource Muted}" />
+                        </StackPanel>
+                        <CheckBox Grid.Column="1" Content="Hiện bản gốc" IsChecked="{Binding ShowSource}" VerticalAlignment="Center" />
+                    </Grid>
+                </Border>
+                <Grid Grid.Row="1">
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="24" Visibility="{Binding IsEmpty, Converter={StaticResource BoolVisibility}}">
+                        <Border Width="60" Height="60" Background="#EAF3ED" CornerRadius="18" HorizontalAlignment="Center" Margin="0,0,0,14">
+                            <TextBlock Text="&#xE8F2;" FontFamily="Segoe MDL2 Assets" FontSize="28" Foreground="{StaticResource Accent}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <TextBlock Text="Một câu nói. Nhiều cách thấu hiểu." FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" />
+                        <TextBlock Text="Bấm “Bắt đầu demo” để xem phụ đề song ngữ.&#10;Bản thử này chỉ phát 6 đoạn văn bản có sẵn." Foreground="{StaticResource Muted}" TextAlignment="Center" TextWrapping="Wrap" Margin="0,8,0,0" LineHeight="23" />
+                    </StackPanel>
+                    <ScrollViewer x:Name="CaptionScroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" ScrollChanged="CaptionScroll_Changed" Padding="22,6" Focusable="True" AutomationProperties.Name="Nội dung phụ đề">
+                        <ItemsControl ItemsSource="{Binding Captions}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Padding="0,16,0,18" BorderBrush="#EDF0ED" BorderThickness="0,0,0,1">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions><ColumnDefinition Width="35" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
+                                            <TextBlock Text="{Binding Number}" FontSize="11" Foreground="#849690" Margin="0,2,0,0" />
+                                            <StackPanel Grid.Column="1">
+                                                <StackPanel Visibility="{Binding DataContext.ShowSource, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BoolVisibility}}" Margin="0,0,0,12">
+                                                    <TextBlock Text="ENGLISH · BẢN GỐC MẪU" Style="{StaticResource SmallLabel}" FontSize="10" Margin="0,0,0,5" />
+                                                    <TextBlock Text="{Binding Source}" Foreground="{StaticResource Muted}" FontSize="14" TextWrapping="Wrap" />
+                                                </StackPanel>
+                                                <TextBlock Text="{Binding TargetLabel}" FontSize="10" FontWeight="SemiBold" Foreground="{StaticResource Accent}" Margin="0,0,0,5" />
+                                                <TextBlock Text="{Binding Translation}" FontSize="{Binding DataContext.CaptionSize, RelativeSource={RelativeSource AncestorType=Window}}" FontWeight="SemiBold" TextWrapping="Wrap" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                    <Button x:Name="LatestButton" Content="↓ Về mới nhất" Click="Latest_Click" Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,22,12" Background="#E6F0E9" />
+                </Grid>
+                <Border Grid.Row="2" BorderBrush="{StaticResource Line}" BorderThickness="0,1,0,0" Padding="16,10">
+                    <Grid>
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="Auto" /><ColumnDefinition Width="120" /><ColumnDefinition /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+                        <TextBlock Text="Cỡ chữ" Foreground="{StaticResource Muted}" VerticalAlignment="Center" Margin="0,0,10,0" />
+                        <Slider Grid.Column="1" Minimum="18" Maximum="30" TickFrequency="1" IsSnapToTickEnabled="True" Value="{Binding CaptionSize}" VerticalAlignment="Center" AutomationProperties.Name="Cỡ chữ phụ đề" />
+                        <Button Grid.Column="3" Content="Xóa phiên" IsEnabled="{Binding CanClear}" Click="Clear_Click" Padding="10,5" BorderThickness="0" Foreground="{StaticResource Muted}" />
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="5" Margin="0,14,0,0">
+            <Grid.ColumnDefinitions><ColumnDefinition /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock Text="{Binding Notice}" FontSize="11" Foreground="{StaticResource Muted}" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
+                <TextBlock Text="Bản UI mẫu · Chưa đọc phụ đề Windows hoặc sử dụng dịch vụ dịch." FontSize="10" Foreground="{StaticResource Muted}" Margin="0,4,0,0" TextWrapping="Wrap" />
+            </StackPanel>
+            <TextBlock Grid.Column="1" Text="{Binding ProgressLabel}" FontSize="11" Foreground="{StaticResource Muted}" VerticalAlignment="Center" Margin="16,0,0,0" />
+        </Grid>
+    </Grid>
+</Window>

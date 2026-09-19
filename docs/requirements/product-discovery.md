@@ -87,4 +87,4 @@ Xin phép trước khi ghi nhận dữ liệu và không dùng nội dung riêng
 
 Cần có rubric giảng viên, xác nhận môi trường/ngôn ngữ, kết quả khảo sát và bằng chứng khả thi việc đọc phụ đề trước khi chốt thiết kế. Nếu không đọc được phụ đề ổn định, phải trình phương án thay đổi phạm vi để chủ dự án xác nhận; không tự chuyển sang tự nhận dạng âm thanh.
 
-Đầu ra tiếp theo: [PRD](3.2-prd.md) và [các quyết định mở](3.3-requirements-analysis.md).
+Đầu ra tiếp theo: [PRD](prd.md) và [các quyết định mở](requirements-analysis.md).

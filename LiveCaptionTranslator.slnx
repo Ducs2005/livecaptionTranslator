@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/presentation/LiveCaptionTranslator.App/LiveCaptionTranslator.App.csproj" />
+  <Project Path="tests/LiveCaptionTranslator.Checks/LiveCaptionTranslator.Checks.csproj" />
+</Solution>
