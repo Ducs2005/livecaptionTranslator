@@ -11,7 +11,7 @@
 - **Thế hệ xử lý:** mốc logic dùng để vô hiệu hóa công việc cũ khi tạm dừng, dừng, đổi đích, mất nguồn hoặc xóa.
 - **Ngôn ngữ đích:** ngôn ngữ bản dịch người dùng chọn, thuộc danh sách dịch vụ hỗ trợ.
 
-Quan hệ yêu cầu, story và tính năng xem tại [ma trận truy vết 3.3](3.3-requirements-analysis.md). Toàn bộ FEAT-01–FEAT-05 là Must đề xuất.
+Quan hệ yêu cầu, story và tính năng xem tại [ma trận truy vết 3.3](requirements-analysis.md). Toàn bộ FEAT-01–FEAT-05 là Must đề xuất.
 
 ## 2. Trạng thái chung
 
@@ -188,6 +188,6 @@ Thông báo trước khi bắt đầu cần nêu: đọc văn bản từ Live Ca
 
 ## 10. Điều kiện kiểm chứng đặc tả
 
-Chạy AC của [3.4](3.4-user-stories-acceptance-criteria.md), NFR của [3.3](3.3-requirements-analysis.md) và lưu bằng chứng trong `docs/testing/`. Bộ mẫu phải bao gồm nguồn rỗng, cập nhật/sửa câu, câu lặp thật, cuộn/reset, trả dịch sai thứ tự, đổi đích giữa yêu cầu, dừng/xóa với kết quả đến muộn, lỗi mạng, hạn mức và nguồn đóng/mở lại.
+Chạy AC của [3.4](user-stories-acceptance-criteria.md), NFR của [3.3](requirements-analysis.md) và lưu bằng chứng trong `docs/testing/`. Bộ mẫu phải bao gồm nguồn rỗng, cập nhật/sửa câu, câu lặp thật, cuộn/reset, trả dịch sai thứ tự, đổi đích giữa yêu cầu, dừng/xóa với kết quả đến muộn, lỗi mạng, hạn mức và nguồn đóng/mở lại.
 
 Ngưỡng 800 ms, 5 giây, 10 giây, 20 yêu cầu và kích thước cửa sổ là đề xuất để tài liệu có thể nghiệm thu; cần xác nhận hoặc điều chỉnh có ghi nhận trước khi lập trình. Chưa có kết quả thử nghiệm sản phẩm trong repo này.

@@ -1,6 +1,6 @@
 # Phân tích Yêu cầu
 
-> v0.1 · 08/09/2026 · Dự thảo. Cơ sở: [PRD](3.2-prd.md). Mọi yêu cầu dưới đây là đặc tả đề xuất cho MVP, chưa phải hành vi đã triển khai.
+> v0.1 · 08/09/2026 · Dự thảo. Cơ sở: [PRD](prd.md). Mọi yêu cầu dưới đây là đặc tả đề xuất cho MVP, chưa phải hành vi đã triển khai.
 
 ## 1. Phạm vi hệ thống và tác nhân
 

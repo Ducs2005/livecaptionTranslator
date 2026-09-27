@@ -1,54 +1,83 @@
 # livecaptionTranslator
 
-Ứng dụng hỗ trợ trên Windows, đọc văn bản từ **Windows Live Captions** và dịch liên tục sang ngôn ngữ người dùng lựa chọn.
+Ứng dụng Windows hỗ trợ đọc bản dịch của **Windows Live Captions** sang ngôn ngữ người dùng lựa chọn.
 
-> Giai đoạn hiện tại: cấu trúc repo và đặc tả yêu cầu v0.1. **Chưa có code triển khai**. Mục tiêu sản phẩm đã được chủ dự án xác nhận; các chi tiết MVP, chỉ tiêu và giải pháp tích hợp là đề xuất chờ xác nhận.
+> Hiện có **UI desktop cơ bản bằng C# / .NET 10 WPF**, dùng 6 câu mẫu cục bộ để trải nghiệm. Chưa kết nối Windows Live Captions, chưa thu âm và chưa gọi dịch vụ dịch thật.
 
-## Bài toán
+## Chạy UI
 
-Người dùng đã có phụ đề do Windows Live Captions tạo ra nhưng cần bản dịch sang ngôn ngữ mong muốn. Dự án bổ sung lớp dịch và cửa sổ hiển thị bản dịch, tận dụng phụ đề có sẵn của Windows.
+Yêu cầu: Windows với **.NET 10 SDK** có thành phần Windows Desktop. Không dùng thư viện NuGet bên thứ ba.
 
-Khả năng dịch tích hợp của Windows phụ thuộc thiết bị, phiên bản và ngôn ngữ đích. Không giả định mọi phiên bản Windows đều thiếu tính năng dịch. Xem [nguồn và bối cảnh](docs/references/README.md).
+Tại thư mục gốc repo:
 
-## Bộ đặc tả theo yêu cầu giảng viên
+```powershell
+dotnet run --project src/presentation/LiveCaptionTranslator.App
+```
+
+Build bản Release:
+
+```powershell
+dotnet build src/presentation/LiveCaptionTranslator.App --configuration Release
+```
+
+Chạy kiểm tra logic demo:
+
+```powershell
+dotnet run --project tests/LiveCaptionTranslator.Checks --configuration Release
+```
+
+Bản build nằm trong `src/presentation/LiveCaptionTranslator.App/bin/Release/net10.0-windows/`. Đây là bản framework-dependent, cần .NET 10 Desktop Runtime nếu chạy trên máy chỉ có runtime; giữ các file build cùng nhau. Chưa có bộ cài hoặc bản phát hành đóng gói.
+
+## Trải nghiệm hiện có
+
+- Bắt đầu phiên demo: một câu ngay lập tức, sau đó thêm một câu mỗi 4 giây, kết thúc sau 6 câu.
+- Chọn Tiếng Việt hoặc English. Các bản dịch là văn bản mẫu đã soạn sẵn; English dùng lại câu nguồn.
+- Tạm dừng, tiếp tục và dừng; xác nhận trước khi xóa hoặc thay phiên có nội dung.
+- Hiện/ẩn bản gốc, chỉnh cỡ chữ, cuộn xem lịch sử và trở về đoạn mới nhất.
+- Di chuyển, đổi kích thước cửa sổ; tùy chọn Luôn nổi hoạt động bằng cửa sổ Windows thật.
+- Nội dung chỉ tồn tại trong bộ nhớ, không gửi mạng hoặc lưu lịch sử.
+
+Xem [phạm vi UI](docs/design/basic-ui.md) và [kết quả kiểm tra](docs/testing/basic-ui-checks.md). UI cơ bản chưa phải bản nghiệm thu các FR/NFR của sản phẩm hoàn chỉnh.
+
+## Nhánh phát triển
+
+- `dev`: nhánh tích hợp thay đổi.
+- `main`: nhánh ổn định nhận các thay đổi đã tích hợp.
+
+## Tài liệu theo yêu cầu học phần
 
 | Mục | Tài liệu |
 | --- | --- |
-| 3.1 | [Khám phá Sản phẩm](docs/requirements/3.1-product-discovery.md) |
-| 3.2 | [Tài liệu Yêu cầu Sản phẩm — PRD](docs/requirements/3.2-prd.md) |
-| 3.3 | [Phân tích Yêu cầu](docs/requirements/3.3-requirements-analysis.md) |
-| 3.4 | [User Stories & Tiêu chí Chấp nhận](docs/requirements/3.4-user-stories-acceptance-criteria.md) |
-| 3.5 | [Đặc tả Tính năng](docs/requirements/3.5-feature-specification.md) |
+| 3.1 | [Khám phá Sản phẩm](docs/requirements/product-discovery.md) |
+| 3.2 | [Tài liệu Yêu cầu Sản phẩm — PRD](docs/requirements/prd.md) |
+| 3.3 | [Phân tích Yêu cầu](docs/requirements/requirements-analysis.md) |
+| 3.4 | [User Stories & Tiêu chí Chấp nhận](docs/requirements/user-stories-acceptance-criteria.md) |
+| 3.5 | [Đặc tả Tính năng](docs/requirements/feature-specification.md) |
 
-## Cấu trúc repo
+## Cấu trúc
 
 ```text
-livecaptionTranslator/
-├── README.md
-├── CONTRIBUTING.md
-├── .gitignore
-├── docs/
-│   ├── README.md
-│   ├── requirements/     # Bộ đặc tả 3.1–3.5
-│   ├── design/           # Giữ chỗ cho thiết kế sau khi chốt yêu cầu
-│   ├── testing/          # Giữ chỗ cho ca kiểm thử và bằng chứng nghiệm thu
-│   └── references/       # Nguồn, đề bài và biên bản xác nhận
-├── src/                 # Chỉ có thư mục nền, chưa có mã nguồn
-│   ├── capture/         # Tích hợp đọc phụ đề Windows
-│   ├── translation/     # Dịch văn bản
-│   ├── presentation/    # Hiển thị và điều khiển
-│   └── settings/        # Cấu hình người dùng
-├── public/              # Thư mục tài nguyên có sẵn
-└── LICENSE/             # Thư mục có sẵn, chưa chọn giấy phép
+src/
+  capture/                           # Giữ chỗ cho tích hợp Live Captions
+  translation/                       # Giữ chỗ cho dịch vụ dịch
+  settings/                          # Giữ chỗ cho cấu hình sau này
+  presentation/
+    LiveCaptionTranslator.App/
+      App.xaml                       # Tài nguyên giao diện
+      MainWindow.xaml                # Cửa sổ chính
+      MainWindow.xaml.cs             # Tương tác cửa sổ và timer demo
+      Models/                        # Trạng thái phiên và câu mẫu
+tests/
+  LiveCaptionTranslator.Checks/      # Kiểm tra logic, không cần framework test ngoài
+docs/
+  requirements/                      # Đặc tả 3.1–3.5
+  design/                            # Phạm vi UI và quyết định thiết kế
+  testing/                           # Bằng chứng kiểm tra
+  references/                        # Nguồn và căn cứ yêu cầu
 ```
 
-Các thư mục giữ chỗ dùng `.gitkeep` để Git theo dõi. Phân chia trong `src/` mang tính định hướng trách nhiệm, chưa chốt framework hoặc kiến trúc thực thi. Không có dependency, cấu hình build hoặc hướng dẫn chạy ở giai đoạn này.
+## Hướng phát triển
 
-## Phạm vi đề xuất
+Kiểm chứng cách đọc văn bản Live Captions trên Windows mục tiêu, chọn nhà cung cấp dịch và ngôn ngữ hỗ trợ, sau đó thay dữ liệu demo bằng tích hợp thật. Không giả định mọi phiên bản Windows đều thiếu tính năng dịch; xem [bối cảnh và nguồn](docs/references/README.md).
 
-- Kết nối nguồn văn bản Windows Live Captions, không tự thu âm/nhận dạng giọng nói.
-- Chọn ngôn ngữ đích trong danh sách được dịch vụ hỗ trợ; ưu tiên tiếng Việt và tiếng Anh để nghiệm thu MVP.
-- Xử lý phụ đề đang thay đổi, hạn chế dịch trùng và loại kết quả cũ.
-- Hiển thị bản dịch trong cửa sổ riêng có tùy chọn luôn nổi, tạm dừng/tiếp tục và phục hồi kết nối.
-
-Cần kiểm chứng khả năng đọc Live Captions trên phiên bản Windows mục tiêu trước khi cam kết triển khai. Chưa chọn nhà cung cấp dịch, giấy phép hay thời hạn. Đề bài/rubric chi tiết của giảng viên chưa được cung cấp.
+Chưa chọn giấy phép; thư mục `LICENSE/` là phần nền có sẵn, không phải văn bản cấp phép.

@@ -2,7 +2,7 @@
 
 > v0.1 · 08/09/2026 · Dự thảo. Tất cả story dưới đây là Must đề xuất. Tiêu chí mô tả kiểm thử tương lai, chưa được chạy.
 
-Given = bối cảnh, When = hành động/sự kiện, Then = kết quả quan sát được. Các trạng thái, thời gian và quy tắc theo [3.5](3.5-feature-specification.md); yêu cầu/NFR theo [3.3](3.3-requirements-analysis.md).
+Given = bối cảnh, When = hành động/sự kiện, Then = kết quả quan sát được. Các trạng thái, thời gian và quy tắc theo [3.5](feature-specification.md); yêu cầu/NFR theo [3.3](requirements-analysis.md).
 
 ## US-01 — Kết nối nguồn phụ đề
 

@@ -15,3 +15,11 @@ Desktop.ini
 
 # Nhật ký cục bộ có thể chứa dữ liệu phiên
 *.log
+
+# .NET build outputs and local tooling
+**/bin/
+**/obj/
+.vs/
+*.user
+*.suo
+.local-dotnet/

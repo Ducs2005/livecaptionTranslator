@@ -6,7 +6,7 @@
 
 livecaptionTranslator bổ sung lớp dịch cho văn bản xuất hiện trong Windows Live Captions. Người dùng mở Live Captions, chọn ngôn ngữ đích và bắt đầu đọc bản dịch trong cửa sổ riêng. Phạm vi không bao gồm thu âm hoặc chuyển giọng nói thành văn bản.
 
-Người dùng mục tiêu và vấn đề được trình bày tại [3.1](3.1-product-discovery.md). Giá trị chính: theo dõi bản dịch mà không sao chép phụ đề thủ công, với ngôn ngữ đích phù hợp nhu cầu và dịch vụ được chọn.
+Người dùng mục tiêu và vấn đề được trình bày tại [3.1](product-discovery.md). Giá trị chính: theo dõi bản dịch mà không sao chép phụ đề thủ công, với ngôn ngữ đích phù hợp nhu cầu và dịch vụ được chọn.
 
 ## 2. Mục tiêu sản phẩm
 
