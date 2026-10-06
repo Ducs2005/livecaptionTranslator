@@ -34,6 +34,7 @@ Bản build nằm trong `src/presentation/LiveCaptionTranslator.App/bin/Release/
 - Chọn Tiếng Việt hoặc English. Các bản dịch là văn bản mẫu đã soạn sẵn; English dùng lại câu nguồn.
 - Tạm dừng, tiếp tục và dừng; xác nhận trước khi xóa hoặc thay phiên có nội dung.
 - Hiện/ẩn bản gốc, chỉnh cỡ chữ, cuộn xem lịch sử và trở về đoạn mới nhất.
+- Ghi nhớ ngôn ngữ đích và tùy chọn hiển thị trong `%LOCALAPPDATA%/LiveCaptionTranslator/preferences.json`; không lưu nội dung phụ đề.
 - Di chuyển, đổi kích thước cửa sổ; tùy chọn Luôn nổi hoạt động bằng cửa sổ Windows thật.
 - Nội dung chỉ tồn tại trong bộ nhớ, không gửi mạng hoặc lưu lịch sử.
 
@@ -66,7 +67,8 @@ src/
       App.xaml                       # Tài nguyên giao diện
       MainWindow.xaml                # Cửa sổ chính
       MainWindow.xaml.cs             # Tương tác cửa sổ và timer demo
-      Models/                        # Trạng thái phiên và câu mẫu
+      Models/                        # Trạng thái phiên, tùy chọn và câu mẫu
+      Services/                      # Lưu tùy chọn cục bộ dạng JSON
 tests/
   LiveCaptionTranslator.Checks/      # Kiểm tra logic, không cần framework test ngoài
 docs/

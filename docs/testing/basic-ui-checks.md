@@ -16,7 +16,8 @@ Bộ kiểm tra là console harness trả exit code khác 0 nếu có lỗi, kh�
 ## Kết quả
 
 - Build Release: thành công, 0 cảnh báo, 0 lỗi.
-- 10/10 kiểm tra logic đạt: trạng thái ban đầu; bắt đầu lặp; tạm dừng/tiếp tục; dừng và tick muộn; đổi đích giữ lịch sử; đổi đích khi tạm dừng; xóa và tick muộn; hết mẫu/bắt đầu lại; loại ngôn ngữ không hỗ trợ; tùy chỉnh hiển thị giữ nguyên nội dung.
+- 13/13 kiểm tra logic đạt: trạng thái ban đầu; bắt đầu lặp; tạm dừng/tiếp tục; dừng và tick muộn; đổi đích giữ lịch sử; đổi đích khi tạm dừng; xóa và tick muộn; hết mẫu/bắt đầu lại; loại ngôn ngữ không hỗ trợ; tùy chỉnh hiển thị giữ nguyên nội dung; lưu/khôi phục cấu hình; xử lý JSON lỗi; giới hạn giá trị cấu hình.
+- Cấu hình: kiểm tra ghi/đọc tùy chọn qua JSON, dữ liệu hỏng trở về mặc định, ngôn ngữ không hỗ trợ bị từ chối và cỡ chữ được giới hạn; file kiểm tra dùng thư mục tạm và được xóa sau đó.
 - Đã mở được cửa sổ bằng bản build thật, quan sát bố cục ban đầu và cây accessibility: tiếng Việt, bộ chọn ngôn ngữ, trạng thái sẵn sàng, các nút bị vô hiệu hóa đúng lúc chưa chạy và thông báo demo xuất hiện.
 - Kiểm tra bằng Computer Use dừng theo thao tác Escape của người dùng trước khi xác nhận tương tác Bắt đầu. Chưa xác minh thủ công đầy đủ: các luồng click, resize, focus bàn phím, cuộn và luôn nổi trên ứng dụng khác.
 - Rà soát ban đầu phát hiện màu chữ nút chính chưa kế thừa màu trắng; đã sửa bằng cách cho TextBlock kế thừa Foreground từ nút/cửa sổ. Chưa chụp lại giao diện sau sửa vì Computer Use đã dừng.

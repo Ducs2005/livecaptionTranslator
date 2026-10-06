@@ -7,5 +7,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="../../src/presentation/LiveCaptionTranslator.App/Models/*.cs" Link="Models/%(Filename)%(Extension)" />
+    <Compile Include="../../src/presentation/LiveCaptionTranslator.App/Services/JsonPreferencesStore.cs" Link="Services/JsonPreferencesStore.cs" />
   </ItemGroup>
 </Project>

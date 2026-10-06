@@ -26,7 +26,15 @@ public sealed class DemoSession : ObservableModel
     private double _captionSize = 22;
     private string _notice = "Chọn ngôn ngữ, rồi bắt đầu xem thử giao diện.";
 
-    public DemoSession() => _selectedLanguage = Languages[0];
+    public DemoSession(UserPreferences? preferences = null)
+    {
+        preferences ??= new UserPreferences();
+        _selectedLanguage = Languages.FirstOrDefault(language =>
+            language.Code == preferences.TargetLanguageCode) ?? Languages[0];
+        _showSource = preferences.ShowSource;
+        _alwaysOnTop = preferences.AlwaysOnTop;
+        _captionSize = Math.Clamp(preferences.CaptionSize, 18, 30);
+    }
 
     public IReadOnlyList<TargetLanguage> Languages { get; } =
         [new("vi", "Tiếng Việt"), new("en", "English")];
@@ -42,6 +50,7 @@ public sealed class DemoSession : ObservableModel
     public string CountLabel => $"{Captions.Count:D2} đoạn";
     public string ProgressLabel => $"{Captions.Count} / {Lines.Length} đoạn mẫu";
     public string Notice => _notice;
+    public UserPreferences Preferences => new(_selectedLanguage.Code, _showSource, _alwaysOnTop, _captionSize);
     public string Status => _state switch
     {
         SessionState.Running => "Đang phát demo",
@@ -145,6 +154,7 @@ public sealed class DemoSession : ObservableModel
     }
 
     private void SetNotice(string text) { _notice = text; Notify(nameof(Notice)); }
+    public void SetStorageNotice(string text) => SetNotice(text);
     private void NotifySession()
     {
         foreach (var name in new[] { nameof(State), nameof(IsEmpty), nameof(CanStart), nameof(CanPause),

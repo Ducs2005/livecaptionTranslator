@@ -1,18 +1,22 @@
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using LiveCaptionTranslator.Models;
+using LiveCaptionTranslator.Services;
 
 namespace LiveCaptionTranslator;
 
 public partial class MainWindow : Window
 {
-    private readonly DemoSession _session = new();
+    private readonly JsonPreferencesStore _preferencesStore = new();
+    private readonly DemoSession _session;
     private readonly DispatcherTimer _timer = new() { Interval = TimeSpan.FromSeconds(4) };
     private bool _followLatest = true;
 
     public MainWindow()
     {
+        _session = new DemoSession(_preferencesStore.Load());
         InitializeComponent();
         DataContext = _session;
         _timer.Tick += OnTick;
@@ -20,8 +24,21 @@ public partial class MainWindow : Window
         {
             _timer.Stop();
             _timer.Tick -= OnTick;
+            SavePreferences();
             _session.Clear();
         };
+    }
+
+    private void SavePreferences()
+    {
+        try
+        {
+            _preferencesStore.Save(_session.Preferences);
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            _session.SetStorageNotice("Không thể lưu tùy chọn trên máy này; thay đổi chỉ áp dụng đến khi đóng ứng dụng.");
+        }
     }
 
     private void OnTick(object? sender, EventArgs e)

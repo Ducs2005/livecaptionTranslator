@@ -133,7 +133,7 @@
             <Grid.ColumnDefinitions><ColumnDefinition /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
             <StackPanel>
                 <TextBlock Text="{Binding Notice}" FontSize="11" Foreground="{StaticResource Muted}" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
-                <TextBlock Text="Bản UI mẫu · Chưa đọc phụ đề Windows hoặc sử dụng dịch vụ dịch." FontSize="10" Foreground="{StaticResource Muted}" Margin="0,4,0,0" TextWrapping="Wrap" />
+                <TextBlock Text="Tùy chọn hiển thị được lưu trên máy · Nội dung phiên không được lưu." FontSize="10" Foreground="{StaticResource Muted}" Margin="0,4,0,0" TextWrapping="Wrap" />
             </StackPanel>
             <TextBlock Grid.Column="1" Text="{Binding ProgressLabel}" FontSize="11" Foreground="{StaticResource Muted}" VerticalAlignment="Center" Margin="16,0,0,0" />
         </Grid>

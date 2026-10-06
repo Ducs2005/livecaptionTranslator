@@ -1,4 +1,6 @@
 using LiveCaptionTranslator.Models;
+using LiveCaptionTranslator.Services;
+using System.IO;
 
 var checks = new (string Name, Action Check)[]
 {
@@ -87,6 +89,42 @@ var checks = new (string Name, Action Check)[]
         session.CaptionSize = 50;
         Require(!session.ShowSource && session.AlwaysOnTop && session.CaptionSize == 30);
         Require(session.Captions[0].Translation == text);
+    }),
+    ("Preferences persist locally and restore display settings", () =>
+    {
+        var path = Path.Combine(Path.GetTempPath(), $"livecaption-preferences-{Guid.NewGuid():N}.json");
+        try
+        {
+            var store = new JsonPreferencesStore(path);
+            store.Save(new UserPreferences("en", false, true, 27));
+            var restored = new DemoSession(store.Load());
+            Require(restored.SelectedLanguage.Code == "en" && !restored.ShowSource);
+            Require(restored.AlwaysOnTop && restored.CaptionSize == 27 && restored.IsEmpty);
+        }
+        finally
+        {
+            if (File.Exists(path)) File.Delete(path);
+        }
+    }),
+    ("Corrupt preferences safely fall back to defaults", () =>
+    {
+        var path = Path.Combine(Path.GetTempPath(), $"livecaption-preferences-{Guid.NewGuid():N}.json");
+        try
+        {
+            File.WriteAllText(path, "{ invalid json }");
+            var restored = new DemoSession(new JsonPreferencesStore(path).Load());
+            Require(restored.SelectedLanguage.Code == "vi" && restored.ShowSource);
+            Require(!restored.AlwaysOnTop && restored.CaptionSize == 22 && restored.IsEmpty);
+        }
+        finally
+        {
+            if (File.Exists(path)) File.Delete(path);
+        }
+    }),
+    ("Persisted preferences clamp caption size and reject unknown languages", () =>
+    {
+        var restored = new DemoSession(new UserPreferences("xx", true, false, 100));
+        Require(restored.SelectedLanguage.Code == "vi" && restored.CaptionSize == 30);
     })
 };
 

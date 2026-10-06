@@ -15,6 +15,7 @@ Nguồn dữ liệu là 6 câu tiếng Anh và bản dịch tiếng Việt có s
 - Thay đổi đích trong phiên đang chạy chỉ cập nhật đoạn hiện tại và các đoạn sau; lịch sử giữ nhãn đích cũ. Khi tạm dừng, đổi đích áp dụng khi tiếp tục.
 - Cuộn lên xem lịch sử không bị ép về cuối; có nút Về mới nhất.
 - Dừng giữ nội dung; xóa hoặc thay phiên yêu cầu xác nhận với lựa chọn mặc định No. Đóng cửa sổ dừng timer và xóa bộ nhớ phiên.
+- Ngôn ngữ đích và tùy chọn hiển thị được ghi vào `%LOCALAPPDATA%/LiveCaptionTranslator/preferences.json`; chỉ lưu file cấu hình, không lưu nội dung phụ đề. JSON hỏng hoặc không đọc được sẽ dùng mặc định.
 
 ## Mức bao phủ đặc tả
 
@@ -28,7 +29,7 @@ Nguồn dữ liệu là 6 câu tiếng Anh và bản dịch tiếng Việt có s
 ## Giới hạn
 
 - Kích thước tối thiểu UI cơ bản là 780 × 650 DIP để giữ đủ vùng điều khiển. Chưa đạt chế độ cửa sổ nhỏ 360 × 240 được đề xuất trong đặc tả; cần thiết kế compact ở bước sau.
-- Không lưu tùy chọn hoặc nội dung khi đóng, không xuất file, không dùng tài khoản.
+- Không lưu nội dung phiên khi đóng, không xuất phụ đề, không dùng tài khoản. Tùy chọn giao diện được lưu cục bộ.
 - Không có trạng thái đang dịch qua mạng, retry API, hạn mức hoặc mô phỏng sai lệch nguồn; các chức năng này không được đánh dấu hoàn tất chỉ nhờ UI demo.
 - Các chỉ tiêu hiệu năng/chất lượng dịch trong NFR cần tích hợp thật mới kiểm chứng được.
 
