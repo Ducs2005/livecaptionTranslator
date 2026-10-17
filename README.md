@@ -35,6 +35,7 @@ Bản build nằm trong `src/presentation/LiveCaptionTranslator.App/bin/Release/
 - Tạm dừng, tiếp tục và dừng; xác nhận trước khi xóa hoặc thay phiên có nội dung.
 - Hiện/ẩn bản gốc, chỉnh cỡ chữ, cuộn xem lịch sử và trở về đoạn mới nhất.
 - Ghi nhớ ngôn ngữ đích và tùy chọn hiển thị trong `%LOCALAPPDATA%/LiveCaptionTranslator/preferences.json`; không lưu nội dung phụ đề.
+- Xuất thủ công các đoạn phụ đề đang có (bản gốc và bản dịch) thành tệp `.txt` UTF-8 qua hộp thoại Lưu tệp.
 - Di chuyển, đổi kích thước cửa sổ; tùy chọn Luôn nổi hoạt động bằng cửa sổ Windows thật.
 - Nội dung chỉ tồn tại trong bộ nhớ, không gửi mạng hoặc lưu lịch sử.
 

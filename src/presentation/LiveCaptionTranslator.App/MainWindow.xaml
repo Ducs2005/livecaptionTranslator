@@ -66,6 +66,7 @@
                 <Button Content="{Binding StartLabel}" Style="{StaticResource PrimaryButton}" IsEnabled="{Binding CanStart}" Click="Start_Click" Margin="0,0,8,0" />
                 <Button Content="{Binding PauseLabel}" IsEnabled="{Binding CanPause}" Click="Pause_Click" Margin="0,0,8,0" />
                 <Button Content="Dừng" IsEnabled="{Binding CanStop}" Click="Stop_Click" />
+                <Button Content="Xuất .txt" IsEnabled="{Binding CanExport}" Click="Export_Click" Margin="8,0,0,0" ToolTip="Lưu các câu phụ đề hiện có thành tệp văn bản" />
             </StackPanel>
             <CheckBox Grid.Column="1" Content="Luôn nổi" IsChecked="{Binding AlwaysOnTop}" VerticalAlignment="Center" Margin="14,0,3,0" ToolTip="Giữ cửa sổ này phía trên các cửa sổ thông thường" />
         </Grid>

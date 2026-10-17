@@ -2,6 +2,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using Microsoft.Win32;
 using LiveCaptionTranslator.Models;
 using LiveCaptionTranslator.Services;
 
@@ -10,6 +11,7 @@ namespace LiveCaptionTranslator;
 public partial class MainWindow : Window
 {
     private readonly JsonPreferencesStore _preferencesStore = new();
+    private readonly CaptionExportService _captionExportService = new();
     private readonly DemoSession _session;
     private readonly DispatcherTimer _timer = new() { Interval = TimeSpan.FromSeconds(4) };
     private bool _followLatest = true;
@@ -80,6 +82,30 @@ public partial class MainWindow : Window
         SynchronizeTimer();
     }
 
+    private async void Export_Click(object sender, RoutedEventArgs e)
+    {
+        var dialog = new SaveFileDialog
+        {
+            Title = "Xuất bản chép phụ đề",
+            FileName = "phien-phu-de.txt",
+            DefaultExt = ".txt",
+            Filter = "Tệp văn bản (*.txt)|*.txt",
+            AddExtension = true,
+            OverwritePrompt = true
+        };
+        if (dialog.ShowDialog(this) != true) return;
+
+        try
+        {
+            await _captionExportService.ExportAsync(_session.Captions, dialog.FileName);
+            _session.SetExportNotice($"Đã xuất {_session.CountLabel} ra tệp văn bản.");
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or InvalidOperationException)
+        {
+            _session.SetExportNotice("Không thể xuất tệp. Hãy chọn vị trí khác rồi thử lại.");
+        }
+    }
+
     private bool Confirm(string message) => MessageBox.Show(this, message, "LiveCaption Translator",
         MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes;
 
@@ -110,8 +136,9 @@ public partial class MainWindow : Window
     private void Guide_Click(object sender, RoutedEventArgs e) => MessageBox.Show(this,
         "BẢN UI DEMO\n\nChọn Tiếng Việt hoặc English, rồi bấm Bắt đầu demo. " +
         "Sáu câu mẫu xuất hiện cách nhau 4 giây. Bạn có thể tạm dừng, tiếp tục, đổi ngôn ngữ, " +
-        "ẩn bản gốc và điều chỉnh cỡ chữ.\n\nLuôn nổi giữ cửa sổ phía trên các cửa sổ thông thường. " +
-        "Nội dung phiên chỉ nằm trong bộ nhớ và không được gửi ra ngoài.\n\n" +
+        "ẩn bản gốc, điều chỉnh cỡ chữ và xuất các câu đang có thành tệp văn bản.\n\n" +
+        "Luôn nổi giữ cửa sổ phía trên các cửa sổ thông thường. " +
+        "Nội dung phiên chỉ nằm trong bộ nhớ trừ khi bạn chủ động xuất tệp, và không được gửi ra ngoài.\n\n" +
         "TÍCH HỢP Ở GIAI ĐOẠN SAU\n\nWindows Live Captions là nguồn phụ đề dự kiến. " +
         "Phiên bản này chưa kết nối với Windows Live Captions, chưa nhận âm thanh và chưa dịch văn bản thật.",
         "Hướng dẫn · LiveCaption Translator", MessageBoxButton.OK, MessageBoxImage.Information);

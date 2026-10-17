@@ -45,6 +45,7 @@ public sealed class DemoSession : ObservableModel
     public bool CanPause => _state is SessionState.Running or SessionState.Paused;
     public bool CanStop => _state is SessionState.Running or SessionState.Paused;
     public bool CanClear => !IsEmpty;
+    public bool CanExport => !IsEmpty;
     public string PauseLabel => _state == SessionState.Paused ? "Tiếp tục" : "Tạm dừng";
     public string StartLabel => IsEmpty ? "Bắt đầu demo" : "Demo mới";
     public string CountLabel => $"{Captions.Count:D2} đoạn";
@@ -155,10 +156,11 @@ public sealed class DemoSession : ObservableModel
 
     private void SetNotice(string text) { _notice = text; Notify(nameof(Notice)); }
     public void SetStorageNotice(string text) => SetNotice(text);
+    public void SetExportNotice(string text) => SetNotice(text);
     private void NotifySession()
     {
         foreach (var name in new[] { nameof(State), nameof(IsEmpty), nameof(CanStart), nameof(CanPause),
-            nameof(CanStop), nameof(CanClear), nameof(PauseLabel), nameof(StartLabel), nameof(CountLabel),
+            nameof(CanStop), nameof(CanClear), nameof(CanExport), nameof(PauseLabel), nameof(StartLabel), nameof(CountLabel),
             nameof(ProgressLabel), nameof(Status), nameof(StatusColor), nameof(Notice) }) Notify(name);
     }
 }

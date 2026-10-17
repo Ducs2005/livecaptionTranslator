@@ -92,7 +92,7 @@ var checks = new (string Name, Action Check)[]
     }),
     ("Preferences persist locally and restore display settings", () =>
     {
-        var path = Path.Combine(Path.GetTempPath(), $"livecaption-preferences-{Guid.NewGuid():N}.json");
+        var path = TemporaryFilePath("preferences", ".json");
         try
         {
             var store = new JsonPreferencesStore(path);
@@ -108,7 +108,7 @@ var checks = new (string Name, Action Check)[]
     }),
     ("Corrupt preferences safely fall back to defaults", () =>
     {
-        var path = Path.Combine(Path.GetTempPath(), $"livecaption-preferences-{Guid.NewGuid():N}.json");
+        var path = TemporaryFilePath("preferences", ".json");
         try
         {
             File.WriteAllText(path, "{ invalid json }");
@@ -125,6 +125,35 @@ var checks = new (string Name, Action Check)[]
     {
         var restored = new DemoSession(new UserPreferences("xx", true, false, 100));
         Require(restored.SelectedLanguage.Code == "vi" && restored.CaptionSize == 30);
+    }),
+    ("Caption export includes source and the translation selected for each entry", () =>
+    {
+        var session = Running();
+        session.SelectedLanguage = session.Languages[1];
+        var text = new CaptionExportService().Format(session.Captions);
+        Require(text.Contains("01. ENGLISH · CÙNG NGÔN NGỮ", StringComparison.Ordinal));
+        Require(text.Contains("EN: A new language opens a window", StringComparison.Ordinal));
+        Require(text.Contains("Bản dịch: A new language opens a window", StringComparison.Ordinal));
+    }),
+    ("Caption export writes UTF-8 text and rejects empty sessions", () =>
+    {
+        var path = TemporaryFilePath("export", ".txt");
+        try
+        {
+            var session = Running();
+            new CaptionExportService().ExportAsync(session.Captions, path).GetAwaiter().GetResult();
+            var bytes = File.ReadAllBytes(path);
+            Require(bytes.Length > 3 && !(bytes[0] == 0xEF && bytes[1] == 0xBB && bytes[2] == 0xBF));
+            Require(File.ReadAllText(path).Contains("Một ngôn ngữ mới", StringComparison.Ordinal));
+            var emptyRejected = false;
+            try { new CaptionExportService().Format(Array.Empty<CaptionEntry>()); }
+            catch (InvalidOperationException) { emptyRejected = true; }
+            Require(emptyRejected);
+        }
+        finally
+        {
+            if (File.Exists(path)) File.Delete(path);
+        }
     })
 };
 
@@ -138,4 +167,6 @@ Console.WriteLine($"{checks.Length - failures}/{checks.Length} checks passed.");
 return failures == 0 ? 0 : 1;
 
 static DemoSession Running() { var session = new DemoSession(); session.Start(); return session; }
+static string TemporaryFilePath(string prefix, string extension) =>
+    Path.Combine(AppContext.BaseDirectory, $"livecaption-{prefix}-{Guid.NewGuid():N}{extension}");
 static void Require(bool condition) { if (!condition) throw new InvalidOperationException("Unexpected session behavior."); }
